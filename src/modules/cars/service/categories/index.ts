@@ -1,1 +1,1 @@
-export { CreateCategoryService } from '../../useCases/createCategory/CreateCategorUseCase'
+export { CreateCategoryService } from '../../useCases/categories/createCategory/CreateCategorUseCase'

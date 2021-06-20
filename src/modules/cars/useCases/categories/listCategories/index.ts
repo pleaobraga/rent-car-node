@@ -1,4 +1,4 @@
-import { CategoriesRepository } from '../../repository/categories'
+import { CategoriesRepository } from '../../../repository/categories'
 import { ListCategoriesController } from './ListCategoriesController'
 import { ListCategoriesUseCase } from './ListCategoriesUseCase'
 
@@ -9,4 +9,4 @@ const listCategoriesController = new ListCategoriesController(
   listCategoriesUseCase
 )
 
-export { listCategoriesController, listCategoriesUseCase }
+export { listCategoriesController }

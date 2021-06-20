@@ -1,1 +1,1 @@
-export { CreateSpecificationService } from './CreateSpecificationService'
+export { CreateSpecificationService } from '../../useCases/specifications/createSpecification/CreateSpecificationUseCase'
