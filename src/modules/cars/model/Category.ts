@@ -7,7 +7,7 @@ interface ICategory {
   create_at: Date
 }
 
-class Category implements ICategory {
+class Category {
   id?: string
   name: string
   description: string
