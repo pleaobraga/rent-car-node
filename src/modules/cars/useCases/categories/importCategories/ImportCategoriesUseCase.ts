@@ -1,7 +1,7 @@
-import csvParse from 'csv-parse'
-import fs from 'fs'
+import csvParse from "csv-parse"
+import fs from "fs"
 
-import { CategoriesRepository } from '../../../repository/categories'
+import { CategoriesRepository } from "../../../repository/categories"
 
 interface IImportCategory {
   name: string
@@ -21,17 +21,17 @@ class ImportCategoriesUseCase {
       stream.pipe(parseFile)
 
       parseFile
-        .on('data', async ([name, description]) => {
+        .on("data", async ([name, description]) => {
           categories.push({
             name,
             description,
           })
         })
-        .on('end', () => {
+        .on("end", () => {
           fs.promises.unlink(file.path)
           resolve(categories)
         })
-        .on('error', (err) => {
+        .on("error", (err) => {
           reject(err)
         })
     })
@@ -40,11 +40,11 @@ class ImportCategoriesUseCase {
   async execute(file: Express.Multer.File): Promise<void> {
     const categories = await this.loadCategories(file)
 
-    categories.forEach(({ name, description }) => {
-      const hasCategory = this.categoriesRepository.findByName(name)
+    categories.forEach(async ({ name, description }) => {
+      const hasCategory = await this.categoriesRepository.findByName(name)
 
       if (!hasCategory) {
-        this.categoriesRepository.create({
+        await this.categoriesRepository.create({
           name,
           description,
         })

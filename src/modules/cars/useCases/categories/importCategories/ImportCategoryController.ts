@@ -1,13 +1,13 @@
-import { Request, Response } from 'express'
+import { Request, Response } from "express"
 
-import { ImportCategoriesUseCase } from './ImportCategoriesUseCase'
+import { ImportCategoriesUseCase } from "./ImportCategoriesUseCase"
 
 class ImportCategoryController {
   constructor(private importCategoriesUseCase: ImportCategoriesUseCase) {}
 
-  handle(request: Request, response: Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { file } = request
-    this.importCategoriesUseCase.execute(file)
+    await this.importCategoriesUseCase.execute(file)
 
     return response.send()
   }
