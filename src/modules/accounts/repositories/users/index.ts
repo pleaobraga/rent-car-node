@@ -1,2 +1,6 @@
-export { IUsersRepository, ICreateUserDTO } from "./IUsersRepository"
+export {
+  IUsersRepository,
+  ICreateUserDTO,
+  IUpdateUserDTO,
+} from "./IUsersRepository"
 export { UsersRepository } from "./UsersRepository"

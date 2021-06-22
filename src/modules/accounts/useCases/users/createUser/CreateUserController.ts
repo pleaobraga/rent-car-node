@@ -17,10 +17,8 @@ class CreateUserController {
       })
 
       return response.status(201).send()
-    } catch (err) {
-      console.dir(err)
-
-      return response.status(400).json({ error: err.message })
+    } catch (e) {
+      return response.status(e.statusCode).json({ error: e.message })
     }
   }
 }

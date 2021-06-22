@@ -19,9 +19,9 @@ export async function ensureAuthenticated(
     throw new AppError("Token missing", 401)
   }
 
-  const [, token] = authHeader.split("")
-
   try {
+    const [, token] = authHeader.split(" ")
+
     const { sub: user_id } = verify(token, "142578idqwjdjiu") as IPayload
 
     const userRepository = new UsersRepository()
@@ -31,8 +31,14 @@ export async function ensureAuthenticated(
       throw new AppError("User does not exists", 401)
     }
 
+    request.user = {
+      id: user_id,
+    }
+
     next()
-  } catch {
+  } catch (e) {
+    console.dir(e)
+
     throw new AppError("invalid token!", 401)
   }
 }
