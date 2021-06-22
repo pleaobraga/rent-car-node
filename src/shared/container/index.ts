@@ -9,6 +9,11 @@ import {
   SpecificationRepository,
 } from "../../modules/cars/repository/specifications"
 
+import {
+  IUsersRepository,
+  UsersRepository,
+} from "../../modules/accounts/repositories/users"
+
 container.registerSingleton<ICategoryRepository>(
   "CategoriesRepository",
   CategoriesRepository
@@ -17,4 +22,9 @@ container.registerSingleton<ICategoryRepository>(
 container.registerSingleton<ISpecificationRepository>(
   "SpecificationRepository",
   SpecificationRepository
+)
+
+container.registerSingleton<IUsersRepository>(
+  "UsersRepository",
+  UsersRepository
 )
