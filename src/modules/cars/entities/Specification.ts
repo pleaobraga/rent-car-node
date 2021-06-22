@@ -1,26 +1,24 @@
-import { v4 as uuidv4 } from 'uuid'
+import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm"
+import { v4 as uuidv4 } from "uuid"
 
-interface ISpecification {
-  id?: string
-  name: string
-  description: string
-  create_at: Date
-}
-
+@Entity("specifications")
 class Specification {
+  @PrimaryColumn()
   id?: string
-  name: string
-  description: string
-  create_at: Date
 
-  constructor({ name, description }: Partial<ISpecification>) {
+  @Column()
+  name: string
+
+  @Column()
+  description: string
+
+  @CreateDateColumn()
+  created_at: Date
+
+  constructor() {
     if (!this.id) {
       this.id = uuidv4()
     }
-
-    this.description = description
-    this.name = name
-    this.create_at = new Date()
   }
 }
 
