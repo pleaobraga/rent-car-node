@@ -8,11 +8,12 @@ interface IPayload {
   sub: string
 }
 
+// eslint-disable-next-line consistent-return
 export async function ensureAuthenticated(
   request: Request,
   response: Response,
   next: NextFunction
-): Promise<void> {
+): Promise<void | Response> {
   const authHeader = request.headers.authorization
 
   if (!authHeader) {
@@ -21,6 +22,8 @@ export async function ensureAuthenticated(
 
   try {
     const [, token] = authHeader.split(" ")
+
+    console.log("token", token)
 
     const { sub: user_id } = verify(token, "142578idqwjdjiu") as IPayload
 
@@ -37,8 +40,6 @@ export async function ensureAuthenticated(
 
     next()
   } catch (e) {
-    console.dir(e)
-
-    throw new AppError("invalid token!", 401)
+    return response.status(e.statusCode || 400).json({ error: e.message })
   }
 }
