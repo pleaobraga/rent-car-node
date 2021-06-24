@@ -1,12 +1,12 @@
 import { AppError } from "../../../../../errors/AppErrors"
-import { CategoriesRepositoryInMemory } from "../../../repository/categories/CategoriesRepositoryInMemory"
+import { CategoriesRepositoryInMemory } from "../../../repository/categories"
 import { CreateCategoryUseCase } from "./CreateCategorUseCase"
 
 let createCategoryUseCase: CreateCategoryUseCase
 let categoriesRepositoryInMemory: CategoriesRepositoryInMemory
 
 describe("Create Category", () => {
-  beforeAll(() => {
+  beforeEach(() => {
     categoriesRepositoryInMemory = new CategoriesRepositoryInMemory()
 
     createCategoryUseCase = new CreateCategoryUseCase(
