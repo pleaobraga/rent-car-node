@@ -3,5 +3,5 @@ export {
   ICreateUserDTO,
   IUpdateUserDTO,
 } from "./IUsersRepository"
-export { UsersRepository } from "./UsersRepository"
+export { UsersRepository } from "../../infra/typeorm/repositories"
 export { UsersRepositoryInMemory } from "./UsersRepositoryInMemory"

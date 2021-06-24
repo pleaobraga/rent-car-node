@@ -1,4 +1,4 @@
-export { CategoriesRepository } from "./CategoriesRepository"
+export { CategoriesRepository } from "../../infra/typeorm/repositories"
 export {
   ICategoryRepository,
   ICreateCategoryDTO,

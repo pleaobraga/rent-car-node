@@ -1,5 +1,5 @@
 import { injectable, inject } from "tsyringe"
-import { AppError } from "../../../../../errors/AppErrors"
+import { AppError } from "../../../../../shared/errors/AppErrors"
 
 import { ICategoryRepository } from "../../../repository/categories"
 
