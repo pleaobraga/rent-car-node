@@ -8,7 +8,7 @@ class CarsRepositoryInMemory implements ICarsRepository {
     name,
     description,
     daily_rate,
-    lisence_plate,
+    license_plate,
     fine_amount,
     brand,
     category_id,
@@ -18,7 +18,7 @@ class CarsRepositoryInMemory implements ICarsRepository {
     Object.assign(car, {
       description,
       daily_rate,
-      lisence_plate,
+      license_plate,
       fine_amount,
       brand,
       category_id,
@@ -31,7 +31,7 @@ class CarsRepositoryInMemory implements ICarsRepository {
   }
 
   async findByLicensePlate(license_plate: string): Promise<Car> {
-    return this.cars.find((c) => c.lisence_plate === license_plate)
+    return this.cars.find((c) => c.license_plate === license_plate)
   }
 }
 
