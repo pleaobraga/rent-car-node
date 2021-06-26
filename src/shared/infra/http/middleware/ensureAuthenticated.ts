@@ -14,13 +14,15 @@ export async function ensureAuthenticated(
   response: Response,
   next: NextFunction
 ): Promise<void | Response> {
-  const authHeader = request.headers.authorization
-
-  if (!authHeader) {
-    throw new AppError("Token missing", 401)
-  }
-
   try {
+    const authHeader = request.headers.authorization
+
+    if (!authHeader) {
+      throw new AppError("Token missing", 401)
+    }
+
+    console.log("passou aki")
+
     const [, token] = authHeader.split(" ")
 
     console.log("token", token)
