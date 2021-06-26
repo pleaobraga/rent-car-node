@@ -1,5 +1,6 @@
+export { SpecificationsRepository } from "../../infra/typeorm/repositories"
 export {
   ICreateSpecificationDTO,
-  ISpecificationRepository,
-} from './ISpecificationRepository'
-export { SpecificationRepository } from './SpecificationRepository'
+  ISpecificationsRepository,
+} from "./ISpecificationsRepository"
+export { SpecificationsRepositoryInMemory } from "./SpecificationsRepositoryInMemory"

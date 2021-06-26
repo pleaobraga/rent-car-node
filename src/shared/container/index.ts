@@ -13,8 +13,8 @@ import {
   CategoriesRepository,
 } from "../../modules/cars/repository/categories"
 import {
-  ISpecificationRepository,
-  SpecificationRepository,
+  ISpecificationsRepository,
+  SpecificationsRepository,
 } from "../../modules/cars/repository/specifications"
 
 container.registerSingleton<ICategoryRepository>(
@@ -22,9 +22,9 @@ container.registerSingleton<ICategoryRepository>(
   CategoriesRepository
 )
 
-container.registerSingleton<ISpecificationRepository>(
-  "SpecificationRepository",
-  SpecificationRepository
+container.registerSingleton<ISpecificationsRepository>(
+  "SpecificationsRepository",
+  SpecificationsRepository
 )
 
 container.registerSingleton<IUsersRepository>(
