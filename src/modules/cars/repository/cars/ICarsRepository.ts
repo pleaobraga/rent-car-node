@@ -10,9 +10,16 @@ interface ICreateCarDTO {
   category_id: string
 }
 
+interface IFindAvaibleCarDTO {
+  name?: string
+  brand?: string
+  category_id?: string
+}
+
 interface ICarsRepository {
   create(data: ICreateCarDTO): Promise<Car>
   findByLicensePlate(license_plate: string): Promise<Car>
+  findAvaible({ name, brand, category_id }: IFindAvaibleCarDTO): Promise<Car[]>
 }
 
-export { ICarsRepository, ICreateCarDTO }
+export { ICarsRepository, ICreateCarDTO, IFindAvaibleCarDTO }

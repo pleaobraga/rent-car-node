@@ -1,5 +1,5 @@
-import { AppError } from "../../../../shared/errors/AppErrors"
-import { CarsRepositoryInMemory } from "../../repository/cars/CarsRepositoryInMemory"
+import { AppError } from "../../../../../shared/errors/AppErrors"
+import { CarsRepositoryInMemory } from "../../../repository/cars/CarsRepositoryInMemory"
 import { CreateCarUseCase } from "./CreateCarUseCase"
 
 let createCarUseCase: CreateCarUseCase
@@ -66,6 +66,6 @@ describe("Create Car", () => {
       ...car,
     })
 
-    expect(newCar.avaible).toBe(true)
+    expect(newCar.avaiable).toBe(true)
   })
 })

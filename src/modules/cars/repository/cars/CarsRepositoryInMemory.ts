@@ -1,5 +1,9 @@
 import { Car } from "../../infra/typeorm/entities"
-import { ICarsRepository, ICreateCarDTO } from "./ICarsRepository"
+import {
+  ICarsRepository,
+  ICreateCarDTO,
+  IFindAvaibleCarDTO,
+} from "./ICarsRepository"
 
 class CarsRepositoryInMemory implements ICarsRepository {
   cars: Car[] = []
@@ -32,6 +36,30 @@ class CarsRepositoryInMemory implements ICarsRepository {
 
   async findByLicensePlate(license_plate: string): Promise<Car> {
     return this.cars.find((c) => c.license_plate === license_plate)
+  }
+
+  async findAvaible({
+    name,
+    category_id,
+    brand,
+  }: IFindAvaibleCarDTO): Promise<Car[]> {
+    const cars = this.cars.filter((c) => {
+      if (c.avaiable === true) {
+        if (
+          (name && c.name === name) ||
+          (category_id && c.category_id === category_id) ||
+          (brand && c.brand === brand)
+        ) {
+          return c
+        }
+
+        return c
+      }
+
+      return null
+    })
+
+    return cars
   }
 }
 

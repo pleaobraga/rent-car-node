@@ -19,8 +19,6 @@ class UsersRepositoryInMemory implements IUsersRepository {
       driver_license,
     })
 
-    console.log("create user", user)
-
     this.users.push(user)
   }
 
