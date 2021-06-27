@@ -20,7 +20,7 @@ describe("Create Cas Specification", () => {
   it("should be able to add a new specification to a car", async () => {
     const carProps = {
       name: "Test car",
-      description: "Descriptioncar",
+      description: "Description car",
       daily_rate: 100,
       license_plate: "ABC-1234",
       fine_amount: 60,
@@ -28,16 +28,16 @@ describe("Create Cas Specification", () => {
       category_id: "category",
     }
 
-    const specfication = await specificationsRepositoryInMemory.create({
+    const specification = await specificationsRepositoryInMemory.create({
       description: "test description",
-      name: "teste name",
+      name: "test name",
     })
 
     const car = await carsRepositoryInMemory.create({
       ...carProps,
     })
 
-    const specifications_id = [specfication.id]
+    const specifications_id = [specification.id]
 
     const newCar = await createCarSpecificationUseCase.execute({
       car_id: car.id,
@@ -45,7 +45,7 @@ describe("Create Cas Specification", () => {
     })
 
     expect(newCar).toHaveProperty("specifications")
-    expect(newCar.specifications).toEqual([specfication])
+    expect(newCar.specifications).toEqual([specification])
   })
 
   it("should not be able to add a new specification to an non existence car ", async () => {

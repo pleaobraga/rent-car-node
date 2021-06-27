@@ -40,7 +40,7 @@ describe("List Categories Controller", () => {
     await request(app)
       .post("/categories")
       .send({
-        name: "Category supertest",
+        name: "Category supertest novo teste",
         description: "Description supertest",
       })
       .set({

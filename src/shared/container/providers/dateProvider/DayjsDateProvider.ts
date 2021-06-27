@@ -10,8 +10,6 @@ class DayjsDateProvider implements IDateProvider {
     const utcStartDate = this.convertToUtc(start_date)
     const utcEndDate = this.convertToUtc(end_Date)
 
-    console.log()
-
     return dayjs(utcEndDate).diff(utcStartDate, "days")
   }
 
