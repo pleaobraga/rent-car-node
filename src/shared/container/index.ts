@@ -1,5 +1,6 @@
 import { container } from "tsyringe"
 
+import "./providers/dateProvider"
 import {
   IUsersRepository,
   UsersRepository,
@@ -20,6 +21,8 @@ import {
   ISpecificationsRepository,
   SpecificationsRepository,
 } from "../../modules/cars/repository/specifications"
+import { RentalsRepository } from "../../modules/rentals/infra/typeorm/repositories"
+import { IRentalsRepository } from "../../modules/rentals/repository/rentals"
 
 container.registerSingleton<ICategoryRepository>(
   "CategoriesRepository",
@@ -41,4 +44,9 @@ container.registerSingleton<ICarsRepository>("CarsRepository", CarsRepository)
 container.registerSingleton<ICarsImagesRepository>(
   "CarsImagesRepository",
   CarsImagesRepository
+)
+
+container.registerSingleton<IRentalsRepository>(
+  "RentalsRepository",
+  RentalsRepository
 )

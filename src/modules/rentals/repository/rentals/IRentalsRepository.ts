@@ -12,7 +12,6 @@ interface IRentalsRepository {
     expected_return_date,
     car_id,
   }: ICreateRentalDTO): Promise<Rental>
-  findById(id: string): Promise<Rental>
   findOpenRentalByCar(id: string): Promise<Rental>
   findOpenRentalByUser(id: string): Promise<Rental>
 }

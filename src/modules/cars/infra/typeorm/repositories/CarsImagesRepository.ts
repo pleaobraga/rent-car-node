@@ -1,5 +1,5 @@
 import { getRepository, Repository } from "typeorm"
-import { carsRoutes } from "../../../../../shared/infra/http/routes/cars.routes"
+
 import {
   ICarsImagesRepository,
   ICreateCarImageDTO,

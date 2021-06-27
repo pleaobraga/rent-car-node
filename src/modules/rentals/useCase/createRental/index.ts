@@ -1,0 +1,1 @@
+export { CreateRentalController } from "./CreateRentalController"

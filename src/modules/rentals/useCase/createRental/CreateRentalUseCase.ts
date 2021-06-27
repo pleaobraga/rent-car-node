@@ -1,5 +1,6 @@
-//import { inject, injectable } from "tsyringe"
+import { inject, injectable } from "tsyringe"
 
+import { IDateProvider } from "../../../../shared/container/providers/dateProvider/IDateProvider"
 import { AppError } from "../../../../shared/errors/AppErrors"
 import { Rental } from "../../infra/typeorm/entities"
 import { IRentalsRepository } from "../../repository/rentals"
@@ -10,11 +11,13 @@ interface IRequest {
   expected_return_date: Date
 }
 
-//@injectable()
+@injectable()
 class CreateRentalUseCase {
   constructor(
-    //@inject("")
-    private rentalsRepository: IRentalsRepository
+    @inject("RentalsRepository")
+    private rentalsRepository: IRentalsRepository,
+    @inject("DayjsDateProvider")
+    private dateProvider: IDateProvider
   ) {}
 
   async execute({
@@ -22,10 +25,12 @@ class CreateRentalUseCase {
     expected_return_date,
     car_id,
   }: IRequest): Promise<Rental> {
+    const minAvailableDayPerCar = 1
+
     const carReserved = await this.rentalsRepository.findOpenRentalByCar(car_id)
 
     if (carReserved) {
-      throw new AppError("Car is unavaiable!", 401)
+      throw new AppError("Car is unavailable!", 401)
     }
 
     const userRentingCar = await this.rentalsRepository.findOpenRentalByUser(
@@ -34,6 +39,14 @@ class CreateRentalUseCase {
 
     if (userRentingCar) {
       throw new AppError("This user has a rental in progress", 401)
+    }
+
+    const dateNow = this.dateProvider.dateNow()
+
+    const compare = this.dateProvider.compareDays(dateNow, expected_return_date)
+
+    if (compare < minAvailableDayPerCar) {
+      throw new AppError("The rental needs to have at least one day", 400)
     }
 
     const rental = await this.rentalsRepository.create({
