@@ -26,7 +26,7 @@ class RentalsRepositoryInMemory implements IRentalsRepository {
   }
 
   async findById(id: string): Promise<Rental> {
-    throw new Error("Method not implemented.")
+    return this.rentals.find((r) => r.id === id)
   }
 
   async findOpenRentalByCar(id: string): Promise<Rental> {

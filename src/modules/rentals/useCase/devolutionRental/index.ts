@@ -1,0 +1,1 @@
+export { DevolutionRentalController } from "./DevolutionRentalController"
