@@ -6,6 +6,10 @@ import {
   UsersRepository,
 } from "../../modules/accounts/repositories/users"
 import {
+  IUsersTokensRepository,
+  UsersTokensRepository,
+} from "../../modules/accounts/repositories/usersTokens"
+import {
   ICarsRepository,
   CarsRepository,
 } from "../../modules/cars/repository/cars"
@@ -49,4 +53,9 @@ container.registerSingleton<ICarsImagesRepository>(
 container.registerSingleton<IRentalsRepository>(
   "RentalsRepository",
   RentalsRepository
+)
+
+container.registerSingleton<IUsersTokensRepository>(
+  "UsersTokensRepository",
+  UsersTokensRepository
 )

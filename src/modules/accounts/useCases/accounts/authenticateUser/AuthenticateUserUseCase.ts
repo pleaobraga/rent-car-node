@@ -1,9 +1,12 @@
 import { compare } from "bcrypt"
 import { sign } from "jsonwebtoken"
 import { inject, injectable } from "tsyringe"
-import { AppError } from "../../../../../shared/errors/AppErrors"
 
+import auth from "../../../../../config/auth"
+import { IDateProvider } from "../../../../../shared/container/providers/dateProvider/IDateProvider"
+import { AppError } from "../../../../../shared/errors/AppErrors"
 import { IUsersRepository } from "../../../repositories/users"
+import { IUsersTokensRepository } from "../../../repositories/usersTokens"
 
 interface IRequest {
   email: string
@@ -16,13 +19,18 @@ interface IResponse {
     email: string
   }
   token: string
+  refresh_token: string
 }
 
 @injectable()
 class AuthenticateUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private userRepository: IUsersRepository
+    private userRepository: IUsersRepository,
+    @inject("UsersTokensRepository")
+    private usersTokensRepository: IUsersTokensRepository,
+    @inject("DayjsDateProvider")
+    private dayjsDateProvider: IDateProvider
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -38,9 +46,24 @@ class AuthenticateUserUseCase {
       throw new AppError("Email or password incorrect", 400)
     }
 
-    const token = sign({}, "142578idqwjdjiu", {
+    const token = sign({}, auth.secret_token, {
       subject: user.id,
-      expiresIn: "1d",
+      expiresIn: auth.expires_in_token,
+    })
+
+    const refresh_token = sign({ email }, auth.secret_refresh_token, {
+      subject: user.id,
+      expiresIn: auth.expires_in_refresh_token,
+    })
+
+    const refresh_token_expires_date = this.dayjsDateProvider.addDays(
+      auth.expires_refresh_token_days
+    )
+
+    await this.usersTokensRepository.create({
+      user_id: user.id,
+      refresh_token,
+      expires_date: refresh_token_expires_date,
     })
 
     return {
@@ -49,6 +72,7 @@ class AuthenticateUserUseCase {
         email: user.email,
       },
       token,
+      refresh_token,
     }
   }
 }

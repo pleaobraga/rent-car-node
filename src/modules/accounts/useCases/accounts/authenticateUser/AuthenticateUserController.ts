@@ -8,11 +8,9 @@ class AuthenticateUserController {
     try {
       const { password, email } = request.body
 
-      const authenticateUserUsercase = container.resolve(
-        AuthenticateUserUseCase
-      )
+      const authenticateUserUseCase = container.resolve(AuthenticateUserUseCase)
 
-      const authInfo = await authenticateUserUsercase.execute({
+      const authInfo = await authenticateUserUseCase.execute({
         password,
         email,
       })
