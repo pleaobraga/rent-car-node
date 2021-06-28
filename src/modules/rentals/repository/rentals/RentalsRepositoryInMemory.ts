@@ -1,5 +1,3 @@
-import { isNull } from "lodash"
-
 import { Rental } from "../../infra/typeorm/entities"
 import { ICreateRentalDTO, IRentalsRepository } from "./IRentalsRepository"
 

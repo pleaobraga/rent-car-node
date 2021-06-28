@@ -1,4 +1,5 @@
 import { AppError } from "../../../../../shared/errors/AppErrors"
+import { User } from "../../../infra/typeorm/entities"
 import {
   ICreateUserDTO,
   UsersRepositoryInMemory,
@@ -9,6 +10,12 @@ import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase"
 let authUserUseCase: AuthenticateUserUseCase
 let usersRepositoryInMemory: UsersRepositoryInMemory
 let createUserUseCase: CreateUserUseCase
+const userProps = {
+  driver_license: "00123",
+  email: "user@gmail.com",
+  password: "1234",
+  name: "user test",
+}
 
 describe("Authenticate User", () => {
   beforeEach(() => {
@@ -18,54 +25,33 @@ describe("Authenticate User", () => {
   })
 
   it("should be able to authenticate an user", async () => {
-    const user: ICreateUserDTO = {
-      driver_license: "00123",
-      email: "user@gmail.com",
-      password: "1234",
-      name: "user test",
-    }
-
-    await createUserUseCase.execute(user)
+    await createUserUseCase.execute({ ...userProps })
 
     const result = await authUserUseCase.execute({
-      email: user.email,
-      password: user.password,
+      email: userProps.email,
+      password: userProps.password,
     })
 
     expect(result).toHaveProperty("token")
   })
 
   it("should not be able to authenticate an nonexistence user", async () => {
-    expect(async () => {
-      const user: ICreateUserDTO = {
-        driver_license: "00123",
-        email: "user@gmail.com",
-        password: "1234",
-        name: "user test",
-      }
-
-      await authUserUseCase.execute({
-        email: user.email,
-        password: user.password,
+    await expect(
+      authUserUseCase.execute({
+        email: userProps.email,
+        password: userProps.password,
       })
-    }).rejects.toBeInstanceOf(AppError)
+    ).rejects.toEqual(new AppError("Email or password incorrect", 400))
   })
 
   it("should not be able to authenticate incorrect password", async () => {
-    expect(async () => {
-      const user: ICreateUserDTO = {
-        driver_license: "00123",
-        email: "user@gmail.com",
-        password: "1234",
-        name: "user test",
-      }
+    await createUserUseCase.execute({ ...userProps })
 
-      await createUserUseCase.execute(user)
-
-      await authUserUseCase.execute({
-        email: user.email,
+    await expect(
+      authUserUseCase.execute({
+        email: userProps.email,
         password: "23643",
       })
-    }).rejects.toBeInstanceOf(AppError)
+    ).rejects.toEqual(new AppError("Email or password incorrect", 400))
   })
 })
