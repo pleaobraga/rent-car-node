@@ -1,11 +1,16 @@
+import { DayjsDateProvider } from "../../../../../shared/container/providers/dateProvider/DayjsDateProvider"
 import { AppError } from "../../../../../shared/errors/AppErrors"
 import { UsersRepositoryInMemory } from "../../../repositories/users"
+import { UsersTokensRepositoryInMemory } from "../../../repositories/usersTokens/UsersTokensRepositoryInMemory"
 import { CreateUserUseCase } from "../../users/createUser/CreateUserUseCase"
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase"
 
 let authUserUseCase: AuthenticateUserUseCase
 let usersRepositoryInMemory: UsersRepositoryInMemory
 let createUserUseCase: CreateUserUseCase
+let usersTokensRepositoryInMemory: UsersTokensRepositoryInMemory
+let dateProvider: DayjsDateProvider
+
 const userProps = {
   driver_license: "00123",
   email: "user@gmail.com",
@@ -16,7 +21,13 @@ const userProps = {
 describe("Authenticate User", () => {
   beforeEach(() => {
     usersRepositoryInMemory = new UsersRepositoryInMemory()
-    authUserUseCase = new AuthenticateUserUseCase(usersRepositoryInMemory)
+    usersTokensRepositoryInMemory = new UsersTokensRepositoryInMemory()
+    dateProvider = new DayjsDateProvider()
+    authUserUseCase = new AuthenticateUserUseCase(
+      usersRepositoryInMemory,
+      usersTokensRepositoryInMemory,
+      dateProvider
+    )
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory)
   })
 
