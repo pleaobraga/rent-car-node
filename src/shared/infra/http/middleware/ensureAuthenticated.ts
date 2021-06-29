@@ -3,6 +3,8 @@ import { verify } from "jsonwebtoken"
 
 import { AppError } from "../../../errors/AppErrors"
 import { UsersRepository } from "../../../../modules/accounts/repositories/users"
+import { UsersTokensRepository } from "../../../../modules/accounts/repositories/usersTokens"
+import auth from "../../../../config/auth"
 
 interface IPayload {
   sub: string
@@ -17,16 +19,23 @@ export async function ensureAuthenticated(
   try {
     const authHeader = request.headers.authorization
 
+    const userTokensRepository = new UsersTokensRepository()
+
     if (!authHeader) {
       throw new AppError("Token missing", 401)
     }
 
     const [, token] = authHeader.split(" ")
 
-    const { sub: user_id } = verify(token, "142578idqwjdjiu") as IPayload
+    const { sub: user_id } = verify(
+      token,
+      auth.secret_refresh_token
+    ) as IPayload
 
-    const userRepository = new UsersRepository()
-    const user = await userRepository.findById(user_id)
+    const user = await userTokensRepository.findByUserIdAndRefreshToken(
+      user_id,
+      token
+    )
 
     if (!user) {
       throw new AppError("User does not exists", 401)
