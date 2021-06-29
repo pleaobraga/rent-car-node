@@ -10,7 +10,7 @@ interface ICreateUserDTO {
 }
 
 interface IUpdateUserDTO {
-  id: string
+  id?: string
   name: string
   email: string
   password: string
@@ -25,6 +25,7 @@ interface IUsersRepository {
     password,
     driver_license,
     avatar,
+    id,
   }: ICreateUserDTO): Promise<void>
   findByEmail(email: string): Promise<User>
   findById(id: string): Promise<User>

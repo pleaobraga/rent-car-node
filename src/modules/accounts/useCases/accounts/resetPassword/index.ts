@@ -1,0 +1,1 @@
+export { ResetPasswordController } from "./ResetPasswordController"
