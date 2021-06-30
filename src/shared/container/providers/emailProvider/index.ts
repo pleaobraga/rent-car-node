@@ -1,9 +1,2 @@
-import { container } from "tsyringe"
-
-import { EtherealMailProvider } from "./EtherealMailProvider"
-import { IEmailProvider } from "./IEmailProvider"
-
-container.registerInstance<IEmailProvider>(
-  "EtherealMailProvider",
-  new EtherealMailProvider()
-)
+export { EtherealMailProvider } from "./EtherealMailProvider"
+export { IEmailProvider } from "./IEmailProvider"

@@ -1,7 +1,6 @@
 import { container } from "tsyringe"
 
-import "./providers/dateProvider"
-import "./providers/emailProvider"
+import "./providers"
 import {
   IUsersRepository,
   UsersRepository,
