@@ -8,7 +8,11 @@
       "type": "node",
       "request": "attach",
       "name": "Docker: Attach to Node",
-      "remoteRoot": "/usr/src/app"
+      "port": 9229,
+      "address": "localhost", // troquei para localhost
+      "sourceMapPathOverrides": {
+        "/usr/app/*": "${workspaceRoot}/*"
+      }
     },
     {
       "type": "node",
