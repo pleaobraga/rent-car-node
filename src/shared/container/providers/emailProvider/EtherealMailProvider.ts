@@ -1,7 +1,7 @@
+import fs from "fs"
+import handlebars from "handlebars"
 import nodemailer, { Transporter } from "nodemailer"
 import { injectable } from "tsyringe"
-import handlebars from "handlebars"
-import fs from "fs"
 
 import { IEmailProvider, ISendEmailDTO } from "./IEmailProvider"
 
@@ -34,9 +34,9 @@ class EtherealMailProvider implements IEmailProvider {
     variables,
     path,
   }: ISendEmailDTO): Promise<void> {
-    const tenplateFileContent = fs.readFileSync(path).toString("utf-8")
+    const templateFileContent = fs.readFileSync(path).toString("utf-8")
 
-    const templateParse = handlebars.compile(tenplateFileContent)
+    const templateParse = handlebars.compile(templateFileContent)
 
     const templateHTML = templateParse(variables)
 
