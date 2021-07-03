@@ -7,11 +7,14 @@ import "reflect-metadata"
 import upload from "../../../config/upload"
 import swaggerFile from "../../../swagger.json"
 import createConnection from "../../database"
+import rateLimiter from "./middleware/rateLimiter"
 import { router } from "./routes"
 import "../../container"
 
 createConnection()
 const app = express()
+
+app.use(rateLimiter)
 
 app.use(express.json())
 
